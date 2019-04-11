@@ -11,6 +11,7 @@ public class Controller {
     private RegisteredUser user;
     private Admin admin;
     private int mode;
+    private int viewMode;
     private int SCREEN_SIZE = 5;
 
     public Controller() {
@@ -19,14 +20,22 @@ public class Controller {
         this.admin = new Admin("Admin");
         this.forum = new Forum();//this.user.getForum();
         this.mode = 0;
+        this.viewMode = 0;
     }
 
+    public void setViewMode(int viewMode) {
+        this.viewMode = viewMode;
+    }
+
+    public int getViewMode() {
+        return viewMode;
+    }
 
     public List<String> addMessage(String inputString) {
 
 
 
-
+        this.setViewMode(1);
         this.forum.addMessage(user.createNewMessage(inputString));
 
         return this.forum.getMessages(SCREEN_SIZE);

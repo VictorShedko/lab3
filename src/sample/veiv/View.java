@@ -11,13 +11,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import sample.control.Controller;
 import sample.model.exeption.*;
 
 public class View extends Application {
     private Controller myController;
-
+    FlowPane managementButton = new FlowPane();
     AnchorPane forum = new AnchorPane();
     Label errorLabel;
     @Override
@@ -63,6 +64,11 @@ public class View extends Application {
             AnchorPane.setTopAnchor(forum, 100.0);
             AnchorPane.setRightAnchor(forum, 30.0);
             AnchorPane.setLeftAnchor(forum, 30.0);
+
+            AnchorPane.setBottomAnchor(managementButton, 250.0);
+            AnchorPane.setTopAnchor(managementButton, 100.0);
+            AnchorPane.setRightAnchor(managementButton, 30.0);
+            AnchorPane.setLeftAnchor(managementButton, 600.0);
 //////////////////////
             AnchorPane.setBottomAnchor(inputMessage, 30.0);
             AnchorPane.setTopAnchor(inputMessage, 400.0);
@@ -76,6 +82,7 @@ public class View extends Application {
             root.getChildren().add(errorLabel);
 
             root.getChildren().add(forum);
+            root.getChildren().add(managementButton);
             root.getChildren().add(loginButton);
 
 
@@ -128,7 +135,7 @@ public class View extends Application {
 
     private void rebuildForum() {
         ArrayList<String> MessageList;
-        if (this.myController.getMode() == 3) {
+        if (this.myController.getViewMode() == 0) {
              MessageList = (ArrayList<String>) this.myController.getUsers(3);
         }else {
             MessageList = (ArrayList<String>) this.myController.getMessages(3);
@@ -148,6 +155,7 @@ public class View extends Application {
             if (this.myController.getMode() == 0) {
 
                 forum.getChildren().clear();
+
                 for (int i = 0; i < MessageList.size(); i++) {
                     Label tempMessage = new Label(MessageList.get(i));
 
@@ -163,7 +171,9 @@ public class View extends Application {
             if ((this.myController.getMode() == 1)||(this.myController.getMode() == 3)) {
 
 
+
                 forum.getChildren().clear();
+                managementButton.getChildren().clear();
                 TextField delNumber = new TextField();
                 Button delButton = new Button("del");
                 Button delUserButton = new Button("del User");
@@ -173,10 +183,10 @@ public class View extends Application {
                 AnchorPane.setRightAnchor(delNumber, 20.0);
                 AnchorPane.setLeftAnchor(delNumber, 600.0);
 
-                AnchorPane.setBottomAnchor(delButton, 200.0);
+                AnchorPane.setBottomAnchor(delButton, 00.0);
                 AnchorPane.setTopAnchor(delButton, 0.0);
-                AnchorPane.setRightAnchor(delButton, 80.0);
-                AnchorPane.setLeftAnchor(delButton, 500.0);
+                AnchorPane.setRightAnchor(delButton, 0.0);
+                AnchorPane.setLeftAnchor(delButton, 0.0);
 
 
                 AnchorPane.setBottomAnchor(delUserButton, 100.0);
@@ -231,7 +241,7 @@ public class View extends Application {
 
 
 
-                            myController.setMode(3);
+                            myController.setViewMode(0);
 
                             View.this.rebuildForum();
 
@@ -242,10 +252,10 @@ public class View extends Application {
                 ///////////////////////////////////////////
 
 
-                forum.getChildren().add(delButton);
-                forum.getChildren().add(delUserButton);
-                forum.getChildren().add(getUserButton);
-                forum.getChildren().add(delNumber);
+                managementButton.getChildren().add(delButton);
+                managementButton.getChildren().add(delUserButton);
+                managementButton.getChildren().add(getUserButton);
+                managementButton.getChildren().add(delNumber);
 
 
                 for (int i = 0; i < MessageList.size(); i++) {
