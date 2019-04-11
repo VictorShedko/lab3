@@ -1,6 +1,9 @@
 package sample.model.writers;
 import sample.model.exeption.OutOfTextBoardRangeException;
 import sample.model.UserBase;
+import sample.model.exeption.EmptyUserListExeption;
+
+import java.util.List;
 
 public class Admin extends RegisteredUser {
     private UserBase userBase;
@@ -29,8 +32,14 @@ public class Admin extends RegisteredUser {
 
 
     }
-    public void deleteUser(String userName) {
+    public void deleteUser(String userName)throws EmptyUserListExeption {
         this.userBase.deleteRequest(userName);
+
+
+
+    }
+    public List<String> getUsers(int number) {
+       return this.userBase.getUsers(number);
 
 
 

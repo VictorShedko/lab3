@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.control.Controller;
-import sample.model.exeption.OutOfTextBoardRangeException;
+import sample.model.exeption.*;
 
 public class View extends Application {
     private Controller myController;
@@ -127,7 +127,12 @@ public class View extends Application {
 
 
     private void rebuildForum() {
-        ArrayList<String> MessageList = (ArrayList<String>) this.myController.getMessages(3);
+        ArrayList<String> MessageList;
+        if (this.myController.getMode() == 3) {
+             MessageList = (ArrayList<String>) this.myController.getUsers(3);
+        }else {
+            MessageList = (ArrayList<String>) this.myController.getMessages(3);
+        }
         if (MessageList == null) {
             Label tempMessage = new Label("there is no message");
 
@@ -155,13 +160,14 @@ public class View extends Application {
                     forum.getChildren().add(tempMessage);
                 }
             }
-            if (this.myController.getMode() == 1) {
+            if ((this.myController.getMode() == 1)||(this.myController.getMode() == 3)) {
 
 
                 forum.getChildren().clear();
                 TextField delNumber = new TextField();
                 Button delButton = new Button("del");
-
+                Button delUserButton = new Button("del User");
+                Button getUserButton = new Button("get Users");
                 AnchorPane.setBottomAnchor(delNumber, 200.0);
                 AnchorPane.setTopAnchor(delNumber, 0.0);
                 AnchorPane.setRightAnchor(delNumber, 20.0);
@@ -172,6 +178,16 @@ public class View extends Application {
                 AnchorPane.setRightAnchor(delButton, 80.0);
                 AnchorPane.setLeftAnchor(delButton, 500.0);
 
+
+                AnchorPane.setBottomAnchor(delUserButton, 100.0);
+                AnchorPane.setTopAnchor(delUserButton, 100.0);
+                AnchorPane.setRightAnchor(delUserButton, 80.0);
+                AnchorPane.setLeftAnchor(delUserButton, 500.0);
+
+                AnchorPane.setBottomAnchor(getUserButton, 0.0);
+                AnchorPane.setTopAnchor(getUserButton, 200.0);
+                AnchorPane.setRightAnchor(getUserButton, 80.0);
+                AnchorPane.setLeftAnchor(getUserButton, 500.0);
 
                 delButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent event) {
@@ -191,8 +207,44 @@ public class View extends Application {
                 });
 
 
-                forum.getChildren().add(delButton);
+                delUserButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent event) {
 
+
+                        try {
+
+
+                            myController.deleteUser(delNumber.getText());
+
+                            View.this.rebuildForum();
+                        }catch (EmptyUserListExeption ex){
+                            View.this.errorLabel.setText("user does not exist ");
+                        }
+
+                    }
+                });
+
+
+                getUserButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent event) {
+
+
+
+
+                            myController.setMode(3);
+
+                            View.this.rebuildForum();
+
+
+                    }
+                });
+
+                ///////////////////////////////////////////
+
+
+                forum.getChildren().add(delButton);
+                forum.getChildren().add(delUserButton);
+                forum.getChildren().add(getUserButton);
                 forum.getChildren().add(delNumber);
 
 

@@ -1,6 +1,7 @@
 package sample.control;
 
 import sample.model.Forum;
+import sample.model.exeption.EmptyUserListExeption;
 import sample.model.writers.*;
 
 import java.util.List;
@@ -23,12 +24,11 @@ public class Controller {
 
     public List<String> addMessage(String inputString) {
 
-        int b=2;
-        int c=2;
+
 
 
         this.forum.addMessage(user.createNewMessage(inputString));
-        int a =1;
+
         return this.forum.getMessages(SCREEN_SIZE);
     }
 
@@ -39,6 +39,9 @@ public class Controller {
         return this.mode;
     }
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
 
     public List<String> dellMessage(int number) throws OutOfTextBoardRangeException  {
 
@@ -60,7 +63,7 @@ public class Controller {
 
     public void sigIn(String newLogin) {
 
-
+        this.addUser(newLogin);
         this.user.changeLogin(newLogin);
         if (user.getLogin().equals(admin.getLogin())) {
             this.mode = 1;
@@ -70,5 +73,23 @@ public class Controller {
 
         return;
     }
+    public void deleteUser(String name)throws EmptyUserListExeption {
+        this.admin.deleteUser(name);
+
+
+    }
+
+    public void addUser(String name){
+        this.admin.createUser(name);
+
+
+    }
+
+    public List<String> getUsers(int screenSize){
+
+
+    return this.admin.getUsers(screenSize);
+    }
+
 
 }
