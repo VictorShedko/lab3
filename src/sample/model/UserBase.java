@@ -24,8 +24,8 @@ public class UserBase {
 
     }
 
-    private void deleteUser(String userName)throws EmptyUserListExeption {
-        if(this.userList==null)throw new EmptyUserListExeption("sorry");
+    private void deleteUser(String userName) throws EmptyUserListExeption {
+        if (this.userList == null) throw new EmptyUserListExeption("sorry");
 
         this.getUserList().removeIf(u -> userName.equals(u.getLogin()));
     }
@@ -36,7 +36,7 @@ public class UserBase {
 
     }
 
-    public void deleteRequest(String userName)throws EmptyUserListExeption {
+    public void deleteRequest(String userName) throws EmptyUserListExeption {
         this.deleteUser(userName);
 
 
@@ -46,7 +46,10 @@ public class UserBase {
         if (this.userList == null) return null;
         numberOfUsers = numberOfUsers > this.userList.size() ? this.userList.size() : numberOfUsers;
 
-        List<String> textList = userList.stream().limit(numberOfUsers).map(RegisteredUser::getLogin).collect(Collectors.toList());
+        List<String> textList = userList.stream()
+                .limit(numberOfUsers)
+                .map(RegisteredUser::getLogin)
+                .collect(Collectors.toList());
 
         return textList;
 

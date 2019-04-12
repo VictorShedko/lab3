@@ -23,7 +23,7 @@ public class View extends Application {
     Label errorLabel;
     @Override
     public void start(Stage primaryStage) {
-        try {
+
             AnchorPane root = new AnchorPane();
 
 
@@ -117,9 +117,7 @@ public class View extends Application {
             primaryStage.setTitle("Random Wandering");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public View() {
